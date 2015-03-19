@@ -1,0 +1,33 @@
+---
+
+logstash_config:
+
+  input:
+    redis:
+      enabled:   "{{logstash_i_redis_enabled|default(true)}}"
+      host:      "{{logstash_i_redis_host|default('localhost')}}"
+      data_type: "{{logstash_i_redis_data_typ|default('list')}}"
+      
+    file: "{{logstash_i_file|default([])}}"
+    # - type:    nginx_access
+    #   path:    /som/path
+    #   exclude: [ "*.gz", ]
+    #   sincedb_path: 
+
+  output:
+
+    # Generally used on forwarders
+    redis:
+      enabled:   "{{logstash_o_redis_enabled|default(false)}}"
+      host:      "{{logstash_o_redis_host|default('localhost')}}"
+      data_type: "{{logstash_o_redis_data_typ|default('list')}}"
+
+    elasticsearch:
+      enabled:    "{{logstash_o_es_enabled|default(true)}}"
+      host:       "{{logstash_o_es_host|default('localhost')}}"
+      port:       "{{logstash_o_es_port|default('9300')}}"
+      cluster:    "{{logstash_o_es_cluster|default('elasticsearch')}}"
+      protocol:   "{{logstash_o_es_protocol|default('transport')}}"
+
+
+# vi:ts=2:sw=2:et:ft=yaml

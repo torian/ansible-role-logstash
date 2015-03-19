@@ -1,0 +1,16 @@
+---
+#
+# Multiple configuration for logstash
+#
+
+- name: Logstash configuration
+  debug: msg='FIXME'
+#  template:
+#    src=etc/logstash/logstash.conf.j2
+#    dest=/etc/logstash/logstash.conf
+#    owner='root'
+#    group='root'
+#    mode='0644'
+#  notify: logstash restart
+
+# vi:ts=2:sw=2:et:ft=yaml

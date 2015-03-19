@@ -1,0 +1,21 @@
+---
+#
+# Add Logstash repositories
+#
+
+- name: Logstash apt key
+  apt_key: 
+    url={{logstash.apt.key}} 
+    state=present
+
+- name : Logstash apt repository
+  apt_repository:
+    repo="deb {{logstash.apt.repository}} stable main"
+    state=present
+
+- name: Logstash update cache
+  apt:
+    update_cache=yes
+    cache_valid_time=86400
+
+# vi:ts=2:sw=2:et:ft=yaml

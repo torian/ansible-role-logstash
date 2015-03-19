@@ -1,0 +1,14 @@
+---
+#
+# Logstash handlers
+#
+
+- name: logstash start
+  service: name=logstash state=started
+
+- name: logstash stop
+  service: name=logstash state=stopped
+
+- name: logstash restart
+  service: name=logstash state=restarted
+

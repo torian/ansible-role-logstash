@@ -1,0 +1,21 @@
+---
+
+logstash:
+
+  owner: logstash
+  group: logstash
+  data_dir: "{{logstash_data_dir|default('/var/lib/logstash')}}"
+  opts:     "{{logstash_opts|default('')}}"
+  jvm_mem:  "{{logstash_jvm_mem|default('500m')}}"
+
+  apt:
+    key: https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    repository: http://packages.elasticsearch.org/logstash/1.4/debian
+
+    pkg: logstash
+    pkg_prereqs:
+      - openjdk-7-jdk
+
+  config: "{{logstash_config}}"
+
+# vi:ts=2:sw=2:et:ft=yaml

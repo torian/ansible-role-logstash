@@ -1,0 +1,41 @@
+
+input { 
+  stdin { }
+}
+
+output {
+  elasticsearch { host => localhost }
+  stdout { codec => rubydebug }
+}
+
+filter {
+  if [type] == "elb" {
+    grok {
+      match => [ "message", "%{TIMESTAMP_ISO8601:timestamp} %{NOTSPACE:elb} %{IP:clientip}:%{POSINT:clientport} (%{IP:backendip}|-)(:%{POSINT:backendport}|) (%{NUMBER:request_processing_time}|-1) (%{NUMBER:backend_processing_time}|-1) (%{NUMBER:response_processing_time}|-1) %{POSINT:elb_status_code} %{POSINT:backend_status_code} %{NUMBER:received_bytes} %{NUMBER:sent_bytes} \"%{DATA:request}\"" ]
+    }
+    date {
+      locale => "en"
+      match => [ "timestamp", "ISO8601" ]
+      add_tag => [ "tsmatch" ]
+    }
+    mutate {
+      convert => [ "request_processing_time", "float" ]
+      convert => [ "backend_processing_time", "float" ]
+      convert => [ "response_processing_time", "float" ]
+      convert => [ "received_bytes", "integer" ]
+      convert => [ "sent_bytes", "integer" ]
+    }
+  }
+
+  if [type] == "apache-access" {
+    mutate {
+      convert => [ "bytes", "integer" ]
+    }
+  }
+
+  if !("_grokparsefailure" in [tags]) {
+    mutate {
+      remove_field => [ "message" ]
+    }
+  }
+}

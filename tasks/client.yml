@@ -1,0 +1,24 @@
+---
+#
+# Configuration for logstash as forwarder (client)
+#
+
+- name: Logstash Forwarder configuration
+  template:
+    src=etc/logstash/client.conf.j2
+    dest=/etc/logstash/conf.d/client.conf
+    owner='root'
+    group='root'
+    mode='0644'
+  notify: logstash restart
+
+- name: Logstash Daemon Settings
+  template:
+    src=etc/default/logstash.j2
+    dest=/etc/default/logstash
+    owner='root'
+    group='root'
+    mode='0644'
+  notify: logstash restart
+
+# vi:ts=2:sw=2:et:ft=yaml

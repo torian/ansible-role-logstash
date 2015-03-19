@@ -1,0 +1,25 @@
+---
+
+- include: repository.yml
+  sudo: yes
+  tags: ls_repository
+
+- include: install.yml
+  sudo: yes
+  tags: ls_install
+
+- include: server.yml
+  sudo: yes
+  tags: ls_server
+  when: logstash_is_server is defined and logstash_is_server
+
+- include: client.yml
+  sudo: yes
+  tags: ls_client
+  when: logstash_is_client is defined and logstash_is_client
+
+- include: service.yml
+  sudo: yes
+
+
+# vi:ts=2:sw=2:et:ft=yaml

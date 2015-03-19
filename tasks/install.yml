@@ -1,0 +1,25 @@
+---
+#
+# Install package and dependencies
+#
+
+- name: Install prerequisites
+  apt:
+    name={{item}}
+    state=present
+  with_items: logstash.apt.pkg_prereqs
+
+- name: Install package
+  apt:
+    name={{logstash.apt.pkg}}
+    state=present
+
+- name: Data directory
+  file:
+    state=directory
+    dest="{{logstash.data_dir}}"
+    owner="{{logstash.owner}}"
+    group="{{logstash.group}}"
+    mode='0750'
+
+# vi:ts=2:sw=2:et:ft=yaml
