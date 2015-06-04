@@ -7,19 +7,19 @@
   apt:
     name={{item}}
     state=present
-  with_items: logstash.apt.pkg_prereqs
+  with_items: logstash_pkg_deps
 
 - name: Install package
   apt:
-    name={{logstash.apt.pkg}}
+    name={{logstash_pkg}}
     state=present
 
 - name: Data directory
   file:
     state=directory
-    dest="{{logstash.data_dir}}"
-    owner="{{logstash.owner}}"
-    group="{{logstash.group}}"
+    dest="{{logstash_data_dir}}"
+    owner="{{logstash_owner}}"
+    group="{{logstash_group}}"
     mode='0750'
 
 # vi:ts=2:sw=2:et:ft=yaml

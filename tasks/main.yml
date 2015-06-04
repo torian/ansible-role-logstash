@@ -2,24 +2,27 @@
 
 - include: repository.yml
   sudo: yes
-  tags: ls_repository
+  tags: logstash_repository
 
 - include: install.yml
   sudo: yes
-  tags: ls_install
+  tags: logstash_install
 
 - include: server.yml
   sudo: yes
-  tags: ls_server
+  tags: logstash_server
   when: logstash_is_server is defined and logstash_is_server
 
 - include: client.yml
   sudo: yes
-  tags: ls_client
+  tags: logstash_client
   when: logstash_is_client is defined and logstash_is_client
 
-- include: service.yml
+- name: Logstash start at boot time
+  service:
+    name=logstash
+    state=started
+    enabled=yes
   sudo: yes
-
 
 # vi:ts=2:sw=2:et:ft=yaml

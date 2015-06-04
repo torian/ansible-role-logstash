@@ -6,13 +6,13 @@
 #JAVACMD=/usr/bin/java
 
 # Set a home directory
-LS_HOME="{{logstash.data_dir}}"
+LS_HOME="{{logstash_data_dir}}"
 
 # Arguments to pass to logstash agent
-LS_OPTS="{{logstash.opts}}"
+LS_OPTS="{{logstash_opts}}"
 
 # Arguments to pass to java
-LS_HEAP_SIZE="{{logstash.jvm_mem}}"
+LS_HEAP_SIZE="{{logstash_jvm_mem}}"
 #LS_JAVA_OPTS="-Djava.io.tmpdir=$HOME"
 
 # pidfiles aren't used for upstart; this is for sysv users.

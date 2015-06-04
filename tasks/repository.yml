@@ -5,12 +5,12 @@
 
 - name: Logstash apt key
   apt_key: 
-    url={{logstash.apt.key}} 
+    url={{logstash_apt_key}} 
     state=present
 
 - name : Logstash apt repository
   apt_repository:
-    repo="deb {{logstash.apt.repository}} stable main"
+    repo="deb {{logstash_apt_repository}} stable main"
     state=present
 
 - name: Logstash update cache

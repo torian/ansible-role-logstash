@@ -1,134 +1,33 @@
 # << Ansible generated file >>
 
 input {
-
-{% if logstash.config.input.redis.enabled -%}
-  {% set redis = logstash.config.input.redis -%}
+{% if logstash_cfg_input_redis %}
   redis {
-    host      => "{{redis.host}}"
-    data_type => "{{redis.data_type}}"
-    key       => "{{inventory_hostname}}"
+    host      => "{{logstash_cfg_input_redis.host|default('localhost')}}"
+    data_type => "{{logstash_cfg_input_redis.data_type|default('list')}}"
+    key       => "{{logstash_cfg_input_redis.key|default('logstash')}}"
   }
 {% endif -%}
 
 # Local file sources
-{% for f in logstash.config.input.file %}
+{% if logstash_cfg_input_file is defined %}
+  {% for f in logstash_cfg_input_file %}
   file {
-    path => {{f.path}}
-    {% if f.add_field is defined -%}
-    add_field => "{{f.add_field}}"
-    {% endif -%}
-    {% if f.codec is defined -%}
-    codec => "{{f.codec}}"
-    {% endif -%}
-    {% if f.discover_interval is defined -%}
-    discover_interval => {{discover_interval}}
-    {% endif -%}
-    {% if f.exclude is defined -%}
-    exclude => "{{f.exclude}}"
-    {% endif -%}
-    {% if f.sincedb_path is defined -%}
-    sincedb_path => "{{f.sincedb_path}}"
-    {% endif -%}
-    {% if f.sincedb_write_interval is defined -%}
-    sincedb_write_interval => "{{f.sincedb_write_interval}}"
-    {% endif -%}
-    {% if f.start_position is defined -%}
-    start_position => "{{f.start_position}}"
-    {% endif -%}
-    {% if f.start_interval is defined -%}
-    start_interval => "{{f.start_interval}}"
-    {% endif -%}
-    {% if f.tags is defined -%}
-    tags => {{f.tags}}
-    {% endif -%}
-    {% if f.type is defined -%}
-    type => "{{f.type}}"
-    {% endif -%}
+    {% for k,v in f.iteritems() %}
+    {{k}} => "{{v}}"
+    {% endfor -%}
   }
 {% endfor -%}
-
+{% endif -%}
 }
 
 output {
-
-{% if logstash.config.output.redis.enabled -%}
-  {% set redis = logstash.config.output.redis %}
-  redis {
-    host      => "{{redis.host}}"
-    data_type => "{{redis.data_type}}"
-    key       => "{{inventory_hostname}}"
-  }
-{% endif -%}
-
-{% if logstash.config.output.elasticsearch.enabled -%}
+{% if logstash_cfg_output_elasticsearch is defined %}
   elasticsearch {
-  {% set es = logstash.config.output.elasticsearch -%}
-  {% if es.action is defined -%}
-    action => "{{es.action}}"
-  {% endif -%}
-  {% if es.bind_host is defined -%}
-    bind_host => "{{es.bind_host}}"
-  {% endif -%}
-  {% if es.bind_port is defined -%}
-    bind_port => "{{es.bind_port}}"
-  {% endif -%}
-  {% if es.cluster is defined -%}
-    cluster => "{{es.cluster}}"
-  {% endif -%}
-  {% if es.codec is defined -%}
-    codec => "{{es.codec}}"
-  {% endif -%}
-  {% if es.document_id is defined -%}
-    document_id => "{{es.document_id}}"
-  {% endif -%}
-  {% if es.embedded is defined -%}
-    embedded => "{{es.embedded}}"
-  {% endif -%}
-  {% if es.embedded_http_port is defined -%}
-    embedded_http_port => "{{es.embedded_http_port}}"
-  {% endif -%}
-  {% if es.flush_size is defined -%}
-    flush_size => "{{es.flush_size}}"
-  {% endif -%}
-  {% if es.host is defined -%}
-    host => "{{es.host}}"
-  {% endif -%}
-  {% if es.idle_flush_time is defined -%}
-    idle_flush_time => "{{es.idle_flush_time}}"
-  {% endif -%}
-  {% if es.index is defined -%}
-    index =>"{{es.index}}"
-  {% endif -%}
-  {% if es.index_type is defined -%}
-    index_type => "{{es.index_type}}"
-  {% endif -%}
-  {% if es.manage_template is defined -%}
-    manage_template => "{{es.manage_template}}"
-  {% endif -%}
-  {% if es.node_name is defined -%}
-    node_name => "{{es.node_name}}"
-  {% endif -%}
-  {% if es.port is defined -%}
-    port => "{{es.port}}"
-  {% endif -%}
-  {% if es.protocol is defined -%}
-    protocol => "{{es.protocol}}"
-  {% endif -%}
-  {% if es.template is defined -%}
-    temlate => "{{es.template}}"
-  {% endif -%}
-  {% if es.template_name is defined -%}
-    template_name => "{{es.template_name}}"
-  {% endif -%}
-  {% if es.template_overwrite is defined -%}
-    template_overwrite => "{{es.template_overwrite}}"
-  {% endif -%}
-  {% if es.workers is defined -%}
-    workers => "{{es.workers}}"
-  {% endif -%}
+    {% for k,v in logstash_cfg_output_elasticsearch.iteritems() %}
+    {{k}} => "{{v}}"
+    {% endfor -%}
   }
 {% endif -%}
-
 }
 

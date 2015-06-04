@@ -3,51 +3,22 @@
 input {
 
 # Local file sources
-{% for f in logstash.config.input.file %}
+{% for f in logstash_cfg_input_file %}
   file {
-    path => {{f.path}}
-    {% if f.add_field is defined -%}
-    add_field => "{{f.add_field}}"
-    {% endif -%}
-    {% if f.codec is defined -%}
-    codec => "{{f.codec}}"
-    {% endif -%}
-    {% if f.discover_interval is defined -%}
-    discover_interval => {{discover_interval}}
-    {% endif -%}
-    {% if f.exclude is defined -%}
-    exclude => "{{f.exclude}}"
-    {% endif -%}
-    {% if f.sincedb_path is defined -%}
-    sincedb_path => "{{f.sincedb_path}}"
-    {% endif -%}
-    {% if f.sincedb_write_interval is defined -%}
-    sincedb_write_interval => "{{f.sincedb_write_interval}}"
-    {% endif -%}
-    {% if f.start_position is defined -%}
-    start_position => "{{f.start_position}}"
-    {% endif -%}
-    {% if f.start_interval is defined -%}
-    start_interval => "{{f.start_interval}}"
-    {% endif -%}
-    {% if f.tags is defined -%}
-    tags => {{f.tags}}
-    {% endif -%}
-    {% if f.type is defined -%}
-    type => "{{f.type}}"
-    {% endif -%}
+    {% for k,v in f.iteritems() %}
+    {{k}} => {{v}}
+    {% endfor -%}
   }
 {% endfor %}
 }
 
 output {
 
-{% if logstash.config.input.redis.enabled -%}
-  {% set redis = logstash.config.output.redis -%}
+{% if logstash_cfg_output_redis is defined -%}
   redis {
-    host      => "{{redis.host}}"
-    data_type => "{{redis.data_type}}"
-    key       => "{{inventory_hostname}}"
+    host      => "{{logstash_cfg_output_redis.host}}"
+    data_type => "{{logstash_cfg_output_redis.data_type}}"
+    key       => "logstash"
   }
 {% endif -%}
 
