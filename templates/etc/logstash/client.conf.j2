@@ -6,7 +6,7 @@ input {
 {% for f in logstash_cfg_input_file %}
   file {
     {% for k,v in f.iteritems() %}
-    {{k}} => {{v}}
+    {{k}} => "{{v}}"
     {% endfor -%}
   }
 {% endfor %}
