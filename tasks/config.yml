@@ -1,16 +1,41 @@
 ---
-#
-# Multiple configuration for logstash
-#
 
-- name: Logstash configuration
-  debug: msg='FIXME'
-#  template:
-#    src=etc/logstash/logstash.conf.j2
-#    dest=/etc/logstash/logstash.conf
-#    owner='root'
-#    group='root'
-#    mode='0644'
-#  notify: logstash restart
+- name: Logstash Input config
+  template:
+    src=etc/logstash/conf.d/input.conf.j2
+    dest="{{logstash_conf_dir}}/input.conf"
+    owner="root"
+    group="root"
+    mode="0644"
+  notify: logstash restart
+  tags: logstash_input
+
+- name: Logstash Filter config
+  template:
+    src=etc/logstash/conf.d/filters.conf.j2
+    dest="{{logstash_conf_dir}}/filters.conf"
+    owner="root"
+    group="root"
+    mode="0644"
+  notify: logstash restart
+  tags: logstash_filter
+
+- name: Logstash Output config
+  template:
+    src=etc/logstash/conf.d/output.conf.j2
+    dest="{{logstash_conf_dir}}/output.conf"
+    owner="root"
+    group="root"
+    mode="0644"
+  notify: logstash restart
+  tags: logstash_output
+
+- name: Logstash Daemon opts
+  template:
+    src="etc/default/logstash.j2"
+    dest="{{logstash_defaults_cfg}}"
+    owner="root"
+    group="root"
+    mode="0644"
 
 # vi:ts=2:sw=2:et:ft=yaml

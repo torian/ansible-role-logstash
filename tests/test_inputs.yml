@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    - logstash_input: |
+        file {
+          path => "/var/log/syslog"
+          type => "syslog"
+          tags => [ "syslog" ]
+        }
+
+
+  roles:
+    - ansible-role-logstash
+
+# vi:ts=2:sw=2:et:ft=yaml

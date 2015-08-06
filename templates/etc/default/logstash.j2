@@ -19,14 +19,14 @@ LS_HEAP_SIZE="{{logstash_jvm_mem}}"
 #LS_PIDFILE=/var/run/logstash.pid
 
 # user id to be invoked as; for upstart: edit /etc/init/logstash.conf
-#LS_USER=logstash
+LS_USER="{{logstash_daemon_user}}"
 
 # logstash logging
 #LS_LOG_FILE=/var/log/logstash/logstash.log
 #LS_USE_GC_LOGGING="true"
 
 # logstash configuration directory
-#LS_CONF_DIR=/etc/logstash/conf.d
+#LS_CONF_DIR="{{logstash_conf_dir}}"
 
 # Open file limit; cannot be overridden in upstart
 #LS_OPEN_FILES=16384

@@ -1,0 +1,12 @@
+---
+
+logstash_repository_key: https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+logstash_repository: "http://packages.elasticsearch.org/logstash/{{logstash_version}}/debian"
+
+logstash_packages:
+  - logstash
+  - openjdk-7-jdk
+
+logstash_defaults_cfg: /etc/default/logstash
+
+# vi:ts=2:sw=2:et:ft=yaml

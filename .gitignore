@@ -1,0 +1,6 @@
+*.swa
+*.swp
+*.swo
+.vagrant
+vagrant
+

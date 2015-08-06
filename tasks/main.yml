@@ -1,28 +1,19 @@
 ---
 
-- include: repository.yml
-  sudo: yes
-  tags: logstash_repository
+- name: Include OS Family vars
+  include_vars: "{{ansible_os_family}}.yml"
+  tags: always
 
 - include: install.yml
-  sudo: yes
   tags: logstash_install
 
-- include: server.yml
-  sudo: yes
-  tags: logstash_server
-  when: logstash_is_server is defined and logstash_is_server
-
-- include: client.yml
-  sudo: yes
-  tags: logstash_client
-  when: logstash_is_client is defined and logstash_is_client
+- include: config.yml
+  tags: logstash_config
 
 - name: Logstash start at boot time
   service:
     name=logstash
     state=started
     enabled=yes
-  sudo: yes
 
 # vi:ts=2:sw=2:et:ft=yaml

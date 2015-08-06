@@ -1,42 +1,20 @@
 ---
 
+logstash_version: 1.5
+
 logstash_owner: logstash
 logstash_group: logstash
+
+logstash_daemon_user: root
+
+logstash_conf_dir: /etc/logstash/conf.d
 
 logstash_data_dir: /var/lib/logstash
 logstash_opts:     ''
 logstash_jvm_mem:  512m
 
-logstash_apt_key:        https://packages.elasticsearch.org/GPG-KEY-elasticsearch
-logstash_apt_repository: http://packages.elasticsearch.org/logstash/1.4/debian
-
-logstash_pkg: logstash
-logstash_pkg_deps:
-  - openjdk-7-jdk
-
-
-logstash_cfg_input_redis:
-  enabled:   "{{logstash_i_redis_enabled|default(true)}}"
-  host:      "{{logstash_i_redis_host|default('localhost')}}"
-  data_type: "{{logstash_i_redis_data_typ|default('list')}}"
-
-#logstash_cfg_input_file:
-#  - type:    nginx_access
-#    path:    /som/path
-#    exclude: [ "*.gz", ]
-#    sincedb_path: 
-
-logstash_cfg_output_redis:
-  # Generally used on forwarders
-  enabled:   "{{logstash_o_redis_enabled|default(false)}}"
-  host:      "{{logstash_o_redis_host|default('localhost')}}"
-  data_type: "{{logstash_o_redis_data_typ|default('list')}}"
-
-logstash_cfg_output_elasticsearch:
-  enabled:    "{{logstash_o_es_enabled|default(true)}}"
-  host:       "{{logstash_o_es_host|default('localhost')}}"
-  port:       "{{logstash_o_es_port|default('9300')}}"
-  cluster:    "{{logstash_o_es_cluster|default('elasticsearch')}}"
-  protocol:   "{{logstash_o_es_protocol|default('transport')}}"
+logstash_input:  ""
+logstash_filter: ""
+logstash_output: ""
 
 # vi:ts=2:sw=2:et:ft=yaml

@@ -1,0 +1,20 @@
+---
+
+- name: Logstash APT repo key
+  apt_key:
+    state=present
+    url="{{logstash_repository_key}}"
+
+- name: Logstash Repository (Debian)
+  apt_repository:
+    state=present
+    repo="deb {{logstash_repository}} stable main"
+    update_cache=yes
+
+- name: Logstash packages (Debian)
+  apt:
+    state=present
+    name={{item}}
+  with_items: logstash_packages
+
+# vi:ts=2:sw=2:et:ft=yaml

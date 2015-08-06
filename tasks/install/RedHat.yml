@@ -1,0 +1,19 @@
+---
+
+- name: Logstash Yum Repository (RedHat)
+  template:
+    state=present
+    src="etc/yum.repos.d/logstash.repo.j2"
+    dest="/etc/yum.repos.d/logstash-{{logstash_version}}.repo"
+    owner="root"
+    group="root"
+    mode="0644"
+
+- name: Logstash packages (RedHat)
+  yum:
+    state=present
+    name="{{item}}"
+    update_cache=yes
+  with_items: logstash_packages
+
+# vi:ts=2:sw=2:et:ft=yaml
