@@ -1,5 +1,13 @@
 ---
 
+logstash_repository: |
+  [logstash-{{logstash_version}}]
+  name=Logstash repository for {{logstash_version}}.x packages
+  baseurl=http://packages.elasticsearch.org/logstash/{{logstash_version}}/centos
+  gpgcheck=1
+  gpgkey=http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+  enabled=1
+
 logstash_packages:
   - logstash
   - java-1.7.0-openjdk

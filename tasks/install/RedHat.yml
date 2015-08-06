@@ -1,10 +1,9 @@
 ---
 
 - name: Logstash Yum Repository (RedHat)
-  template:
-    state=present
-    src="etc/yum.repos.d/logstash.repo.j2"
+  copy:
     dest="/etc/yum.repos.d/logstash-{{logstash_version}}.repo"
+    content="{{logstash_repository}}"
     owner="root"
     group="root"
     mode="0644"
