@@ -7,14 +7,19 @@ logstash_group: logstash
 
 logstash_daemon_user: root
 
-logstash_conf_dir: /etc/logstash/conf.d
+logstash_install_dir: /opt/logstash
+logstash_conf_dir:    /etc/logstash/conf.d
+logstash_data_dir:    /var/lib/logstash
 
-logstash_data_dir: /var/lib/logstash
 logstash_opts:     ''
 logstash_jvm_mem:  512m
 
 logstash_inputs:  ""
 logstash_filters: ""
 logstash_outputs: ""
+
+logstash_plugins:
+  - logstash-input-s3
+  - logstash-output-s3
 
 # vi:ts=2:sw=2:et:ft=yaml

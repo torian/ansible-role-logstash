@@ -10,6 +10,9 @@
 - include: config.yml
   tags: logstash_config
 
+- include: plugins.yml
+  tags: logstash_plugins
+
 - name: Logstash start at boot time
   service:
     name=logstash
