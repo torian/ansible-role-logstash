@@ -1,10 +1,10 @@
 # << Ansible generated file >>
 
 output {
-{% if logstash_output == "" %}
+{% if logstash_outputs == "" %}
   stdout { codec => rubydebug }
 {% else %}
-  {{logstash_output}}
+  {{logstash_outputs}}
 {% endif %}
 }
 

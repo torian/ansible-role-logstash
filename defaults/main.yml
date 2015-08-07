@@ -13,8 +13,8 @@ logstash_data_dir: /var/lib/logstash
 logstash_opts:     ''
 logstash_jvm_mem:  512m
 
-logstash_input:  ""
-logstash_filter: ""
-logstash_output: ""
+logstash_inputs:  ""
+logstash_filters: ""
+logstash_outputs: ""
 
 # vi:ts=2:sw=2:et:ft=yaml
