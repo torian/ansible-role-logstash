@@ -10,5 +10,5 @@ galaxy_info:
         - trusty
   categories:
     - monitoring
-dependencies: {}
 
+dependencies: []
