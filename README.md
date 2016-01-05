@@ -6,8 +6,10 @@ FIXME
 
 ## Tested On
 
-  * Ubuntu trusty
-  * AMZ-linux 2015.03
+  * Debian
+  * Ubuntu
+  * Centos
+  * Amazon Linux
 
 ## Defaults
 
