@@ -6,7 +6,7 @@ before_install:
   - sudo apt-get update -qq
 
 install:
-  - pip install ansible
+  - pip install ansible==1.9.4
 
 script:
   # Test functionality with default values
