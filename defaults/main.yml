@@ -2,6 +2,8 @@
 
 logstash_version: 2.1
 
+logstash_upgrade: false
+
 logstash_owner: logstash
 logstash_group: logstash
 
