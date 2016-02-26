@@ -18,6 +18,10 @@ logstash_upgrade: False
 logstash_owner: logstash
 logstash_group: logstash
 
+# User that will run the service
+#
+logstash_daemon_user: root
+
 # Install dir (defined by the package)
 #  Changing this will have no effect, as this is just a way to
 #  refer to the installation directory without hardcoding things
