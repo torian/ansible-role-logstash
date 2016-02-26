@@ -2,11 +2,11 @@
 
 - name: Logstash Input config
   template:
-    src=etc/logstash/conf.d/input.conf.j2
-    dest="{{logstash_conf_dir}}/input.conf"
-    owner="root"
-    group="root"
-    mode="0644"
+    src:   etc/logstash/conf.d/input.conf.j2
+    dest:  "{{logstash_conf_dir}}/input.conf"
+    owner: "root"
+    group: "root"
+    mode:  "0644"
   notify: logstash restart
   tags: 
     - logstash_config
@@ -14,11 +14,11 @@
 
 - name: Logstash Filter config
   template:
-    src=etc/logstash/conf.d/filters.conf.j2
-    dest="{{logstash_conf_dir}}/filters.conf"
-    owner="root"
-    group="root"
-    mode="0644"
+    src:   etc/logstash/conf.d/filters.conf.j2
+    dest:  "{{logstash_conf_dir}}/filters.conf"
+    owner: "root"
+    group: "root"
+    mode:  "0644"
   notify: logstash restart
   tags: 
     - logstash_config
@@ -26,11 +26,11 @@
 
 - name: Logstash Output config
   template:
-    src=etc/logstash/conf.d/output.conf.j2
-    dest="{{logstash_conf_dir}}/output.conf"
-    owner="root"
-    group="root"
-    mode="0644"
+    src:  etc/logstash/conf.d/output.conf.j2
+    dest: "{{logstash_conf_dir}}/output.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
   notify: logstash restart
   tags: 
     - logstash_config
@@ -38,11 +38,11 @@
 
 - name: Logstash Daemon opts
   template:
-    src="etc/default/logstash.j2"
-    dest="{{logstash_defaults_cfg}}"
-    owner="root"
-    group="root"
-    mode="0644"
+    src:   etc/default/logstash.j2
+    dest:  "{{logstash_defaults_cfg}}"
+    owner: "root"
+    group: "root"
+    mode:  "0644"
   notify: logstash restart
   tags: 
     - logstash_config
