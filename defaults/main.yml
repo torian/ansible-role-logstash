@@ -1,25 +1,55 @@
 ---
 
+# Logstash version
+#  The package repository is build upon major and minor versions
+#
 logstash_version: 2.1
 
-logstash_upgrade: false
+# Logstash upgrade
+#  If the package is to be upgraded, (major, minor or patch release),
+#  and there is a currently installed version on the system, you can
+#  set this to True as an extra var.
+#
+logstash_upgrade: False
 
+# Logstash user and group
+#  FIXME: Currently not in use
+#
 logstash_owner: logstash
 logstash_group: logstash
 
-logstash_daemon_user: root
-
+# Install dir (defined by the package)
+#  Changing this will have no effect, as this is just a way to
+#  refer to the installation directory without hardcoding things
+#
 logstash_install_dir: /opt/logstash
 logstash_conf_dir:    /etc/logstash/conf.d
 logstash_data_dir:    /var/lib/logstash
 
+# Logstash JVM runtime options
+#
 logstash_opts:     ''
+
+# Logstash JVM Heap size
+#
 logstash_jvm_mem:  512m
 
-logstash_inputs:  ""
-logstash_filters: ""
-logstash_outputs: ""
+# input, filter and output configuration settings
+#  This are vars that hold configurations to be expanded
+#  on each section. They can be defined as a multiline
+#  value with the YAML metachar |, i.e:
+#
+#   logstash_output: |
+#     output {
+#       codec => rubydebug
+#     }
+#
+logstash_inputs:  ''
+logstash_filters: ''
+logstash_outputs: ''
 
+# List of plugins to be installed
+#
 logstash_plugins:
   - logstash-input-s3
   - logstash-output-s3
