@@ -13,7 +13,7 @@
 
 - name: Logstash packages (Debian)
   apt:
-    state=present
+    state="{{ (logstash_upgrade) | ternary('latest', 'present') }}"
     name={{item}}
   with_items: logstash_packages
 

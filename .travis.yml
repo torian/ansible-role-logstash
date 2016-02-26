@@ -2,6 +2,9 @@
 language: python
 python:   "2.7"
 
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+
 before_install:
   - sudo apt-get update -qq
 
@@ -12,5 +15,8 @@ script:
   # Test functionality with default values
   - ansible-playbook tests/test_defaults.yml -i localhost, --syntax-check 
   - ansible-playbook tests/test_defaults.yml -i localhost, --connection=local --sudo
+
+  # Test upgrade
+  - ansible-playbook tests/test_defaults.yml -i localhost, --connection=local --sudo -e 'logstash_version=2.2 logstash_upgrade=True'
 
 # vi:ts=2:sw=2:et:ft=yaml

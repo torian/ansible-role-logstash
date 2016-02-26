@@ -16,7 +16,6 @@
 - name: Logstash start at boot time
   service:
     name=logstash
-    state=started
     enabled=yes
 
 # vi:ts=2:sw=2:et:ft=yaml
