@@ -8,7 +8,7 @@
 - name: Logstash Repository (Debian)
   apt_repository:
     state: present
-    repo: "deb {{logstash_repository}} stable main"
+    repo: "deb {{logstash_apt_repository}} stable main"
     update_cache: yes
 
 - name: Logstash packages (Debian)
