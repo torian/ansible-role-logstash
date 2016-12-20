@@ -2,17 +2,16 @@
 
 - name: Logstash Yum Repository (RedHat)
   copy:
-    dest="/etc/yum.repos.d/logstash-{{logstash_version}}.repo"
-    content="{{logstash_repository}}"
-    owner="root"
-    group="root"
-    mode="0644"
+    dest: "/etc/yum.repos.d/logstash-{{logstash_version}}.repo"
+    content: "{{logstash_yum_config}}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
 
 - name: Logstash packages (RedHat)
   yum:
-    state=present
-    name="{{item}}"
-    update_cache=yes
-  with_items: logstash_packages
+    state: present
+    name: "logstash"
+    update_cache: yes
 
 # vi:ts=2:sw=2:et:ft=yaml
