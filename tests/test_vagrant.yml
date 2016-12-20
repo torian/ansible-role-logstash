@@ -1,9 +1,10 @@
 ---
-- hosts: all
+
+- name: Test Defaults
+  hosts: all
   sudo: yes
 
   vars:
-    - logstash_version: 1.5.4
     - logstash_jvm_mem: 256m
     - logstash_input: |
           file {
@@ -15,24 +16,22 @@
   roles:
     - ansible-role-logstash
 
-## << Test: Upgrade previously installed version
-
-- hosts: all
-  sudo: yes
-
-  vars:
-    - logstash_version: 2.1
-    - logstash_upgrade: true
-    - logstash_jvm_mem: 256m
-    - logstash_input: |
-          file {
-            path => "/var/log/syslog"
-            type => "syslog"
-            tags => [ "syslog" ]
-          }
-
-  roles:
-    - ansible-role-logstash
-
+#- name: Update logstash to a newer version
+#  hosts: all
+#  sudo: yes
+#
+#  vars:
+#    - logstash_upgrade: true
+#    - logstash_jvm_mem: 256m
+#    - logstash_input: |
+#          file {
+#            path => "/var/log/syslog"
+#            type => "syslog"
+#            tags => [ "syslog" ]
+#          }
+#
+#  roles:
+#    - ansible-role-logstash
+#
 
 # vi:ts=2:sw=2:et:ft=yaml

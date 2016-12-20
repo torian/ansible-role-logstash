@@ -1,5 +1,21 @@
 VAGRANTFILE_API_VERSION = '2'
 
+EPEL_REPO_6 = '''
+[epel]
+name     = EPEL 6 - \$basearch
+baseurl  = http://mirror.globo.com/epel/6/\$basearch
+enabled  = 1
+gpgcheck = 0
+'''
+
+EPEL_REPO_7 = '''
+[epel]
+name     = EPEL 7 - \$basearch
+baseurl  = http://mirror.globo.com/epel/7/\$basearch
+enabled  = 1
+gpgcheck = 0
+'''
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
@@ -10,68 +26,78 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize [ 'modifyvm', :id, '--natdnsproxy1', 'on' ]
   end
       
-  config.vm.define 'ubuntu' do |ubuntu|
-    ubuntu.vm.box      = 'ubuntu/trusty64'
-    ubuntu.vm.hostname = 'ubuntu'
+  config.vm.define 'ubuntu-trusty' do |ubuntu_t|
+    ubuntu_t.vm.box      = 'ubuntu/trusty64'
+    ubuntu_t.vm.hostname = 'ubuntu-trusty'
     
-    ubuntu.vm.provision 'shell', inline: 'apt-get update'
-    ubuntu.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip'
-    ubuntu.vm.provision 'shell', inline: 'pip install ansible jinja2'
-    ubuntu.vm.provision 'shell', inline: 'ln -sf /vagrant /ansible-role-logstash'
+    ubuntu_t.vm.provision 'shell', inline: 'apt-get update'
+    ubuntu_t.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip libffi-dev libssl-dev python-dev'
+    ubuntu_t.vm.provision 'shell', inline: 'pip install ansible==2.2.0.0 ansible-lint jinja2'
 
-    ubuntu.vm.provision 'ansible' do |ansible| 
+    ubuntu_t.vm.provision 'ansible' do |ansible| 
       ansible.playbook = 'tests/test_vagrant.yml'
+      ansible.extra_vars = {
+        filebeat_user:  'root',
+        filebeat_group: 'root',
+        filebeat_create_user: false,
+      }
     end
     
   end
 
-  config.vm.define 'centos-6' do |centos|
-    EPEL_REPO = '''
-[epel]
-name     = EPEL 6 - \$basearch
-baseurl  = http://mirror.globo.com/epel/6/\$basearch
-enabled  = 1
-gpgcheck = 0
-'''
+  config.vm.define 'ubuntu-precise' do |ubuntu_p|
+    ubuntu_p.vm.box      = 'ubuntu/precise64'
+    ubuntu_p.vm.hostname = 'ubuntu-precise'
+    
+    ubuntu_p.vm.provision 'shell', inline: 'apt-get update'
+    ubuntu_p.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip libffi-dev libssl-dev python-dev'
+    ubuntu_p.vm.provision 'shell', inline: 'pip install ansible==2.2.0.0 ansible-lint jinja2'
 
-    centos.vm.box      = "puppetlabs/centos-6.6-64-nocm"
-    centos.vm.hostname = 'centos'
+    ubuntu_p.vm.provision 'ansible' do |ansible| 
+      ansible.playbook = 'tests/test_vagrant.yml'
+      ansible.extra_vars = {
+        filebeat_user:  'root',
+        filebeat_group: 'root',
+        filebeat_create_user: false,
+      }
+    end
+    
+  end
 
-    centos.vm.provision 'shell', inline: 'yum install -y ca-certificates'
-    centos.vm.provision 'shell', inline: "echo \"#{EPEL_REPO}\" > /etc/yum.repos.d/epel.repo"
-    centos.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc'
-    centos.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
-    centos.vm.provision 'shell', inline: 'pip install -q ansible jinja2'
+  config.vm.define 'centos-6' do |centos6|
+    centos6.vm.box      = "puppetlabs/centos-6.6-64-nocm"
+    centos6.vm.hostname = 'centos-6'
 
-    centos.vm.provision 'ansible' do |ansible| 
+    centos6.vm.provision 'shell', inline: 'yum install -y ca-certificates'
+    centos6.vm.provision 'shell', inline: "echo \"#{EPEL_REPO_6}\" > /etc/yum.repos.d/epel.repo"
+    centos6.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc libffi-devel openssl-devel'
+    centos7.vm.provision 'shell', inline: 'yum install -y java-1.8.0-openjdk.x86_64'
+    centos6.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
+    centos6.vm.provision 'shell', inline: 'pip install -q ansible==2.2.0.0 ansible-lint jinja2'
+
+    centos6.vm.provision 'ansible' do |ansible| 
       ansible.playbook   = 'tests/test_vagrant.yml'
-      #ansible.extra_vars = {
-      #}
+      ansible.extra_vars = {
+      }
     end
   end
 
-  config.vm.define 'centos-7' do |centos|
-    EPEL_REPO = '''
-[epel]
-name     = EPEL 7 - \$basearch
-baseurl  = http://mirror.globo.com/epel/7/\$basearch
-enabled  = 1
-gpgcheck = 0
-'''
+  config.vm.define 'centos-7' do |centos7|
+    centos7.vm.box      = 'centos/7'
+    centos7.vm.hostname = 'centos-7'
 
-    centos.vm.box      = 'puppetlabs/centos-7.0-64-nocm'
-    centos.vm.hostname = 'centos'
+    centos7.vm.provision 'shell', inline: 'yum install -y ca-certificates'
+    centos7.vm.provision 'shell', inline: "echo \"#{EPEL_REPO_7}\" > /etc/yum.repos.d/epel.repo"
+    centos7.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc libffi-devel openssl-devel'
+    centos7.vm.provision 'shell', inline: 'yum install -y java-1.8.0-openjdk.x86_64'
+    centos7.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
+    centos7.vm.provision 'shell', inline: 'pip install -q ansible==2.2.0.0 ansible-lint jinja2'
 
-    centos.vm.provision 'shell', inline: 'yum install -y ca-certificates'
-    centos.vm.provision 'shell', inline: "echo \"#{EPEL_REPO}\" > /etc/yum.repos.d/epel.repo"
-    centos.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc'
-    centos.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
-    centos.vm.provision 'shell', inline: 'pip install -q ansible jinja2'
-
-    centos.vm.provision 'ansible' do |ansible| 
+    centos7.vm.provision 'ansible' do |ansible| 
       ansible.playbook = 'tests/test_vagrant.yml'
+      ansible.extra_vars = {
+      }
     end
-
   end
 
 end
