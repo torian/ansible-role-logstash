@@ -30,8 +30,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ubuntu_t.vm.box      = 'ubuntu/trusty64'
     ubuntu_t.vm.hostname = 'ubuntu-trusty'
     
+    ubuntu_t.vm.provision 'shell', inline: 'add-apt-repository ppa:openjdk-r/ppa'
     ubuntu_t.vm.provision 'shell', inline: 'apt-get update'
     ubuntu_t.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip libffi-dev libssl-dev python-dev'
+    ubuntu_t.vm.provision 'shell', inline: 'apt-get install -y -qq  openjdk-8-jre'
     ubuntu_t.vm.provision 'shell', inline: 'pip install ansible==2.2.0.0 ansible-lint jinja2'
 
     ubuntu_t.vm.provision 'ansible' do |ansible| 
@@ -49,8 +51,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ubuntu_p.vm.box      = 'ubuntu/precise64'
     ubuntu_p.vm.hostname = 'ubuntu-precise'
     
+    ubuntu_p.vm.provision 'shell', inline: 'add-apt-repository ppa:openjdk-r/ppa'
     ubuntu_p.vm.provision 'shell', inline: 'apt-get update'
     ubuntu_p.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip libffi-dev libssl-dev python-dev'
+    ubuntu_p.vm.provision 'shell', inline: 'apt-get install -y -qq  openjdk-8-jre'
     ubuntu_p.vm.provision 'shell', inline: 'pip install ansible==2.2.0.0 ansible-lint jinja2'
 
     ubuntu_p.vm.provision 'ansible' do |ansible| 
@@ -71,7 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     centos6.vm.provision 'shell', inline: 'yum install -y ca-certificates'
     centos6.vm.provision 'shell', inline: "echo \"#{EPEL_REPO_6}\" > /etc/yum.repos.d/epel.repo"
     centos6.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc libffi-devel openssl-devel'
-    centos7.vm.provision 'shell', inline: 'yum install -y java-1.8.0-openjdk.x86_64'
+    centos6.vm.provision 'shell', inline: 'yum install -y java-1.8.0-openjdk.x86_64'
     centos6.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
     centos6.vm.provision 'shell', inline: 'pip install -q ansible==2.2.0.0 ansible-lint jinja2'
 
