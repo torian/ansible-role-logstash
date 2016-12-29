@@ -8,7 +8,7 @@ through the official repository packages.
 ## Supported Platforms
   * EL / Centos (6 / 7)
   * Debian (Wheezy / Jessie)
-  * Ubuntu (Trusty)
+  * Ubuntu (Precise / Trusty)
   * AMZ Linux
 
 ## Role Variables
@@ -17,11 +17,11 @@ The following role variables are defined in `defaults/main.yml`. For a
 detailed explanation about them you can take a look at the file.
 
 ```
-logstash_version: 2.1
+logstash_version: 5.x
 
 logstash_daemon_user: root
 
-logstash_install_dir: /opt/logstash
+logstash_install_dir: /usr/share/logstash
 logstash_conf_dir:    /etc/logstash/conf.d
 logstash_data_dir:    /var/lib/logstash
 
