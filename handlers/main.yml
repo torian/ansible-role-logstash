@@ -5,13 +5,10 @@
 
 - name: logstash start
   service: name=logstash state=started
-  sudo: yes
 
 - name: logstash stop
   service: name=logstash state=stopped
-  sudo: yes
 
 - name: logstash restart
   service: name=logstash state=restarted
-  sudo: yes
 

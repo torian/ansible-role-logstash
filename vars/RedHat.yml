@@ -1,22 +1,17 @@
 ---
 
-logstash_v_major: "{{logstash_version|regex_replace('^([0-9]+)\\..*$', '\\\\1')|int}}"
-logstash_v_minor: "{{logstash_version|regex_replace('^[0-9]+\\.([0-9]+).*$', '\\\\1')|int}}"
-logstash_v_patch: "{{logstash_version|regex_replace('^[0-9]+\\.[0-9]+\\.([0-9]+)$', '\\\\1')|int}}"
+logstash_yum_repository: "{{logstash_repo_baseurl}}/yum"
 
-logstash_repo_version: "{{logstash_v_major}}.{{logstash_v_minor}}"
-
-logstash_repository: |
-  [logstash-{{logstash_repo_version}}]
-  name=Logstash repository for {{logstash_repo_version}} packages
-  baseurl=http://packages.elastic.co/logstash/{{logstash_repo_version}}/centos
+logstash_yum_config: |
+  [logstash-{{logstash_version}}]
+  name=Logstash repository for {{logstash_version}} packages
+  baseurl={{logstash_yum_repository}}
   gpgcheck=1
-  gpgkey=http://packages.elastic.co/GPG-KEY-elasticsearch
+  gpgkey={{logstash_gpg_key}}
   enabled=1
 
 logstash_packages:
   - logstash
-  - java-1.7.0-openjdk
 
 logstash_defaults_cfg: /etc/sysconfig/logstash
 

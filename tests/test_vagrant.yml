@@ -1,6 +1,6 @@
 ---
 
-- name: Test Defaults
+- name: Test with Default values
   hosts: all
   sudo: yes
 
@@ -16,11 +16,13 @@
   roles:
     - ansible-role-logstash
 
-#- name: Update logstash to a newer version
-#  hosts: all
+## << Test: Upgrade previously installed version
+#
+#- hosts: all
 #  sudo: yes
 #
 #  vars:
+#    - logstash_version: 2.1
 #    - logstash_upgrade: true
 #    - logstash_jvm_mem: 256m
 #    - logstash_input: |
