@@ -8,7 +8,7 @@
     group: "root"
     mode:  "0644"
   notify: logstash restart
-  tags: 
+  tags:
     - logstash_config
     - logstash_input
 
@@ -20,7 +20,7 @@
     group: "root"
     mode:  "0644"
   notify: logstash restart
-  tags: 
+  tags:
     - logstash_config
     - logstash_filter
 
@@ -32,7 +32,7 @@
     group: "root"
     mode: "0644"
   notify: logstash restart
-  tags: 
+  tags:
     - logstash_config
     - logstash_output
 
@@ -44,7 +44,7 @@
     group: "root"
     mode:  "0644"
   notify: logstash restart
-  tags: 
+  tags:
     - logstash_config
 
 # vi:ts=2:sw=2:et:ft=yaml
