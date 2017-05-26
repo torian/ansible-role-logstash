@@ -22,15 +22,48 @@ logstash_version: 5.x
 logstash_daemon_user: root
 
 logstash_install_dir: /usr/share/logstash
-logstash_conf_dir:    /etc/logstash/conf.d
+logtash_conf_prefix:  /etc/logstash
+logstash_conf_dir:    "{{logstash_conf_prefix}}/conf.d"
 logstash_data_dir:    /var/lib/logstash
-
-logstash_opts:     ''
-logstash_jvm_mem:  512m
 
 logstash_plugins:
   - logstash-input-s3
   - logstash-output-s3
+```
+
+The defaults for the JVM config (`jvm.options`) are based on the values
+shipped by logstash
+
+```
+logstash_jvm_mem: 1g
+
+logstash_config_jvm_defaults: |
+  -Xms{{logstash_jvm_mem}}
+  -Xmx{{logstash_jvm_mem}}
+  -XX:+UseParNewGC
+  -XX:+UseConcMarkSweepGC
+  -XX:CMSInitiatingOccupancyFraction=75
+  -XX:+UseCMSInitiatingOccupancyOnly
+  -XX:+DisableExplicitGC
+  -Djava.awt.headless=true
+  -Dfile.encoding=UTF-8
+  -XX:+HeapDumpOnOutOfMemoryError
+
+logstash_config_jvm: "{{logstash_config_jvm_defaults}}"
+```
+
+The defaults for the daemon config (`logstash.yml`) are also based
+on the defaults shipped by logstash, but in this case, they values
+of `logstash_config_daemon_defaults` and `logstash_config_daemon`
+are merged using the jinja2 filter `combine()`:
+
+```
+logstash_config_daemon_defaults:
+  path.data: "{{logstash_data_dir}}"
+  path.config: "{{logstash_conf_dir}}"
+  path.logs: "{{logstash_logs_dir}}"
+
+logstash_config_daemon: {}
 ```
 
 ## Usage

@@ -1,5 +1,13 @@
 # Ansible Logstash role Changelog
 
+## 2017-05-26: 1.1.0
+
+  * Fixed configuration indentation
+  * Added configuration for `jvm.options` file (`logstash_config_jvm`)
+  * Added configuration for `logstash.yml` file (`logstash_config_daemon`)
+  * Removed no longer used `logstash_opts` var, used in `/etc/[sysconfig,default]/logstash`
+
+
 ## 2017-03-21: 1.0.1
 
   * Ansible lint - Fixed trailing whitespaces
