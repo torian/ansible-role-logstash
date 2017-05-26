@@ -2,7 +2,7 @@
 
 {% if logstash_inputs != "" %}
 input {
-{{logstash_inputs}}
+  {{logstash_inputs|indent(width = 2)}}
 }
 {% endif %}
 
