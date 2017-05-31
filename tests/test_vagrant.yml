@@ -6,12 +6,21 @@
 
   vars:
     - logstash_jvm_mem: 256m
-    - logstash_input: |
-          file {
-            path => "/var/log/syslog"
-            type => "syslog"
-            tags => [ "syslog" ]
-          }
+    - logstash_inputs: |
+        file {
+          path => "/var/log/syslog"
+          type => "syslog"
+          tags => [ "syslog" ]
+        }
+    - logstash_filters: |
+        grok {
+          match => [ "message", "%{SYSLOGLINE}" ]
+        }
+
+    - logstash_outputs: |
+        stdout {
+          codec => rubydebug
+        }
 
   roles:
     - ansible-role-logstash

@@ -2,6 +2,6 @@
 
 {% if logstash_filters != "" %}
 filter {
-{{logstash_filters}}
+  {{logstash_filters|indent(width = 2)}}
 }
 {% endif %}

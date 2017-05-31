@@ -1,0 +1,5 @@
+# << Ansible managed file >>
+
+{{logstash_config_daemon_defaults|combine(logstash_config_daemon)|to_nice_yaml(width=2)}}
+
+# vim:ts=2:sw=2:et:ft=yaml

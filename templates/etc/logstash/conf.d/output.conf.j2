@@ -4,7 +4,7 @@ output {
 {% if logstash_outputs == "" %}
   stdout { codec => rubydebug }
 {% else %}
-  {{logstash_outputs}}
+  {{logstash_outputs|indent(width = 2)}}
 {% endif %}
 }
 

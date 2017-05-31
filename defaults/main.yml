@@ -20,7 +20,7 @@ logstash_package_baseurl: "{{logstash_baseurl}}/downloads/logstash"
 #  and there is a currently installed version on the system, you can
 #  set this to True as an extra var.
 #
-logstash_upgrade: False
+logstash_upgrade: false
 
 # Logstash user and group
 #  FIXME: Currently not in use
@@ -37,16 +37,44 @@ logstash_daemon_user: root
 #  refer to the installation directory without hardcoding things
 #
 logstash_install_dir: /usr/share/logstash
-logstash_conf_dir:    /etc/logstash/conf.d
+logstash_conf_prefix: /etc/logstash
+logstash_conf_dir:    "{{logstash_conf_prefix}}/conf.d"
 logstash_data_dir:    /var/lib/logstash
+logstash_logs_dir:    /var/log/logstash
 
-# Logstash JVM runtime options
+# Logstash JVM config
 #
-logstash_opts: ''
 
-# Logstash JVM Heap size
+logstash_jvm_mem: 512m
+
+# Logstash JVM 
 #
-logstash_jvm_mem:  512m
+logstash_config_jvm_defaults: |
+  -Xms{{logstash_jvm_mem}}
+  -Xmx{{logstash_jvm_mem}}
+  -XX:+UseParNewGC
+  -XX:+UseConcMarkSweepGC
+  -XX:CMSInitiatingOccupancyFraction=75
+  -XX:+UseCMSInitiatingOccupancyOnly
+  -XX:+DisableExplicitGC
+  -Djava.awt.headless=true
+  -Dfile.encoding=UTF-8
+  -XX:+HeapDumpOnOutOfMemoryError
+
+logstash_config_jvm: "{{logstash_config_jvm_defaults}}"
+
+# Logstash daemon config
+#
+#  logstash_config_daemon_defaults: defaults for daemon (logstash.yml)
+logstash_config_daemon_defaults:
+  path.data: "{{logstash_data_dir}}"
+  path.config: "{{logstash_conf_dir}}"
+  path.logs: "{{logstash_logs_dir}}"
+
+#  logstash_config_daemon: dict where to specify additional daemon configs
+#  that will be merged through combine() with `logstash_config_daemon_defaults`
+logstash_config_daemon: {}
+
 
 # input, filter and output configuration settings
 #  This are vars that hold configurations to be expanded
