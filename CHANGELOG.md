@@ -1,6 +1,6 @@
 # Ansible Logstash role Changelog
 
-## 2017-05-26: 1.1.0
+## 2017-05-31: 1.1.0
 
   * Fixed configuration indentation
   * Added configuration for `jvm.options` file (`logstash_config_jvm`)
