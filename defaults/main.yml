@@ -15,6 +15,9 @@ logstash_baseurl: "https://artifacts.elastic.co"
 logstash_repo_baseurl: "{{logstash_baseurl}}/packages/{{logstash_version}}"
 logstash_package_baseurl: "{{logstash_baseurl}}/downloads/logstash"
 
+# Optionally include version to lock in on a specific version
+logstash_package_name: logstash
+
 # Logstash upgrade
 #  If the package is to be upgraded, (major, minor or patch release),
 #  and there is a currently installed version on the system, you can

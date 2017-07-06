@@ -14,6 +14,6 @@
 - name: Logstash packages (Debian)
   apt:
     state: "{{ (logstash_upgrade) | ternary('latest', 'present') }}"
-    name: "logstash"
+    name: "{{ logstash_package_name }}"
 
 # vi:ts=2:sw=2:et:ft=yaml
