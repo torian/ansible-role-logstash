@@ -10,8 +10,8 @@
 
 - name: Logstash packages (RedHat)
   yum:
-    state: present
-    name: "logstash"
+    state: "{{ (logstash_upgrade) | ternary('latest', 'present') }}"
+    name: "{{ logstash_package_name }}"
     update_cache: yes
 
 # vi:ts=2:sw=2:et:ft=yaml
