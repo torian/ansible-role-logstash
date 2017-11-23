@@ -1,10 +1,10 @@
 ---
 
 - name: Logstash plugins
-  command: "bin/logstash-plugin install {{item}}"
-  args:
-    chdir: "{{logstash_install_dir}}"
+  logstash_plugin:
+    state: present
+    name:  "{{item}}"
   with_items: "{{logstash_plugins}}"
   when: logstash_plugins is defined
-
+ 
 # vi:ts=2:sw=2:et:ft=yaml
