@@ -1,5 +1,12 @@
 # Ansible Logstash role Changelog
 
+## 2017-11-23: 1.2.0
+
+  * Fixed issue that would make the role install the latest logstash version
+    (given a mayor), instead of the specified one
+  * Logstash version: Bumped default installation version
+  * Switched from `command` module on plugins installation to `logstash_plugin`
+
 ## 2017-05-31: 1.1.0
 
   * Fixed configuration indentation
