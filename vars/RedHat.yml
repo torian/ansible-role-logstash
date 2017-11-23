@@ -3,15 +3,16 @@
 logstash_yum_repository: "{{logstash_repo_baseurl}}/yum"
 
 logstash_yum_config: |
-  [logstash-{{logstash_version}}]
-  name=Logstash repository for {{logstash_version}} packages
+  [logstash-{{logstash_version_repo}}]
+  name=Logstash repository for {{logstash_version_repo}} packages
   baseurl={{logstash_yum_repository}}
   gpgcheck=1
   gpgkey={{logstash_gpg_key}}
   enabled=1
 
-logstash_packages:
-  - logstash
+logstash_package: "logstash-{{logstash_version}}"
+
+logstash_package_url: "{{logstash_package_baseurl}}/logstash-{{logstash_version}}.rpm"
 
 logstash_defaults_cfg: /etc/sysconfig/logstash
 

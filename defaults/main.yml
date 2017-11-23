@@ -3,17 +3,16 @@
 # Logstash version
 #  The package repository is build upon major and minor versions
 #
-logstash_version: 5.x
-
-#logstash_v_major: "{{logstash_version|regex_replace('^([0-9]+)\\..*$', '\\\\1')|int}}"
-#logstash_v_minor: "{{logstash_version|regex_replace('^[0-9]+\\.([0-9]+).*$', '\\\\1')|int}}"
-#logstash_v_patch: "{{logstash_version|regex_replace('^[0-9]+\\.[0-9]+\\.([0-9]+)$', '\\\\1')|int}}"
-#logstash_repo_version: "{{logstash_v_major}}.{{logstash_v_minor}}"
+logstash_version: 5.6.4
+logstash_version_repo: "{{logstash_version|regex_replace('^([0-9]+)\\..*$', '\\1')}}.x"
 
 logstash_gpg_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
 logstash_baseurl: "https://artifacts.elastic.co"
-logstash_repo_baseurl: "{{logstash_baseurl}}/packages/{{logstash_version}}"
+logstash_repo_baseurl: "{{logstash_baseurl}}/packages/{{logstash_version_repo}}"
 logstash_package_baseurl: "{{logstash_baseurl}}/downloads/logstash"
+
+logstash_use_repo: true
 
 # Logstash upgrade
 #  If the package is to be upgraded, (major, minor or patch release),

@@ -2,8 +2,9 @@
 
 logstash_apt_repository: "{{logstash_repo_baseurl}}/apt"
 
-logstash_packages:
-  - logstash
+logstash_package: "logstash=1:{{logstash_version}}-1"
+
+logstash_package_url: "{{logstash_package_baseurl}}/logstash-{{logstash_version}}.deb"
 
 logstash_defaults_cfg: /etc/default/logstash
 
