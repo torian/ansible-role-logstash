@@ -2,9 +2,10 @@
 
 - name: Test with Default values
   hosts: all
-  sudo: yes
+  become: yes
 
   vars:
+    - logstash_version: 5.6.1
     - logstash_jvm_mem: 256m
     - logstash_inputs: |
         file {
@@ -26,7 +27,7 @@
     - ansible-role-logstash
 
 ## << Test: Upgrade previously installed version
-#
+
 #- hosts: all
 #  sudo: yes
 #

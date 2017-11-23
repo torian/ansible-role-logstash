@@ -17,7 +17,7 @@ The following role variables are defined in `defaults/main.yml`. For a
 detailed explanation about them you can take a look at the file.
 
 ```
-logstash_version: 5.x
+logstash_version: 5.6.4
 
 logstash_daemon_user: root
 
