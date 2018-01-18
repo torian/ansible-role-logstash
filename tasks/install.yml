@@ -1,5 +1,5 @@
 ---
 
-- import_tasks: install/{{ ansible_os_family }}.yml
+- include_tasks: install/{{ ansible_os_family }}.yml
 
 # vi:ts=2:sw=2:et:ft=yaml
