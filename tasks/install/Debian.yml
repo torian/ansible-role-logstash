@@ -12,7 +12,7 @@
       state: present
       repo: "deb {{logstash_apt_repository}} stable main"
       update_cache: yes
-        
+
   - name: Logstash packages (Debian)
     apt:
       state: "{{ (logstash_upgrade) | ternary('latest', 'present') }}"
@@ -32,5 +32,6 @@
       deb: "/var/cache/apt/archives/logstash-{{logstash_version}}.deb"
       state: present
     notify: logstash restart
-
+    
+  when: not logstash_use_repo
 # vi:ts=2:sw=2:et:ft=yaml
