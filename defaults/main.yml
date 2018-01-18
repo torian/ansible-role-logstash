@@ -46,7 +46,7 @@ logstash_logs_dir:    /var/log/logstash
 
 logstash_jvm_mem: 512m
 
-# Logstash JVM 
+# Logstash JVM
 #
 logstash_config_jvm_defaults: |
   -Xms{{logstash_jvm_mem}}
@@ -91,8 +91,8 @@ logstash_outputs: ''
 
 # List of plugins to be installed
 #
-logstash_plugins:
-  - logstash-input-s3
-  - logstash-output-s3
+# logstash_plugins:
+#   - logstash-input-s3
+#   - logstash-output-s3
 
 # vi:ts=2:sw=2:et:ft=yaml
