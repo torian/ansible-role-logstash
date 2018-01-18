@@ -37,6 +37,7 @@
     owner: "root"
     group: "root"
     mode:  "0644"
+  when: logstash_filters
   notify: logstash restart
   tags:
     - logstash_config
