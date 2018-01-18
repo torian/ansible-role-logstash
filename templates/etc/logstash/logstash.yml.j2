@@ -1,4 +1,4 @@
-# << Ansible managed file >>
+# {{ ansible_managed }}
 
 {{logstash_config_daemon_defaults|combine(logstash_config_daemon)|to_nice_yaml(width=2)}}
 

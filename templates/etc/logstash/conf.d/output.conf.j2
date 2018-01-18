@@ -1,4 +1,4 @@
-# << Ansible generated file >>
+# {{ ansible_managed }}
 
 output {
 {% if logstash_outputs == "" %}
@@ -7,4 +7,3 @@ output {
   {{logstash_outputs|indent(width = 2)}}
 {% endif %}
 }
-
