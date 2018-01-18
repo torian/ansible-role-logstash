@@ -1,9 +1,5 @@
 ---
 
-- include: install/Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include: install/RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- import_tasks: install/{{ ansible_os_family }}.yml
 
 # vi:ts=2:sw=2:et:ft=yaml

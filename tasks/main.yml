@@ -4,13 +4,13 @@
   include_vars: "{{ansible_os_family}}.yml"
   tags: always
 
-- include: install.yml
+- import_tasks: install.yml
   tags: logstash_install
 
-- include: config.yml
+- import_tasks: config.yml
   tags: logstash_config
 
-- include: plugins.yml
+- import_tasks: plugins.yml
   tags: logstash_plugins
 
 - name: Logstash start at boot time
