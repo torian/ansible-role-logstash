@@ -1,7 +1,0 @@
-# {{ ansible_managed }}
-
-{% if logstash_inputs != "" %}
-input {
-  {{logstash_inputs|indent(width = 2)}}
-}
-{% endif %}

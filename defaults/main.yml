@@ -67,7 +67,7 @@ logstash_config_jvm: "{{logstash_config_jvm_defaults}}"
 #  logstash_config_daemon_defaults: defaults for daemon (logstash.yml)
 logstash_config_daemon_defaults:
   path.data: "{{logstash_data_dir}}"
-  path.config: "{{logstash_conf_dir}}"
+  path.config: "{{ (logstash_pipelines is defined) | ternary('', logstash_conf_dir) }}"
   path.logs: "{{logstash_logs_dir}}"
 
 #  logstash_config_daemon: dict where to specify additional daemon configs
@@ -88,6 +88,23 @@ logstash_config_daemon: {}
 logstash_inputs:  ''
 logstash_filters: ''
 logstash_outputs: ''
+
+logstash_configs:
+  - name: filters
+    config: |
+      filter {
+        {{ logstash_filters | indent(width=2) }}
+      }
+  - name: input
+    config: |
+      input {
+        {{ logstash_inputs }}
+      }
+  - name: output
+    config: |
+      output {
+        {{ logstash_outputs }}
+      }
 
 # List of plugins to be installed
 #

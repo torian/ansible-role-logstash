@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/torian/ansible-role-logstash.svg)](https://travis-ci.org/torian/ansible-role-logstash)
 
-This ansible role installs [Logstash](https://www.elastic.co/products/logstash) 
+This Ansible role installs [Logstash](https://www.elastic.co/products/logstash)
 through the official repository packages.
 
 ## Supported Platforms
@@ -22,7 +22,7 @@ logstash_version: 5.6.4
 logstash_daemon_user: root
 
 logstash_install_dir: /usr/share/logstash
-logtash_conf_prefix:  /etc/logstash
+logstash_conf_prefix:  /etc/logstash
 logstash_conf_dir:    "{{logstash_conf_prefix}}/conf.d"
 logstash_data_dir:    /var/lib/logstash
 
@@ -68,14 +68,105 @@ logstash_config_daemon: {}
 
 ## Usage
 
-Setting the configuration for `input`, `filter` and `output` is specified
-using the following special vars:
+Setting configuration for `input`, `filter`, and `output` happens in the `logstash_configs` list. Each list item in `logstash_configs` takes a `name`, `config`, and optional `pipeline`. When `pipeline` is omitted the configuration is placed in `logstash_conf_dir` directory and picked up by the `main` pipeline (which is the default when no `pipelines.yml` is configured).
+
+An example single configuration file for the default `main` pipeline could be:
+
+```
+logstash_configs:
+  - name: mylogs
+    config: |
+      input{
+        beats {
+          host => "0.0.0.0"
+          port => 5044
+          codec => "json"
+        }
+      }
+      filter {
+        uuid {
+          target => "uuid"
+        }
+      }
+      output {
+        file {
+          path => "/var/log/mylogs/%{logger}-%{+YYYY-MM-dd}.log.gz"
+          codec => json_lines
+        }
+      }
+```
+
+Alternatively, this can be split into multiple files. The following would generate two configuration files, `/etc/logstash/conf.d/input.conf` and `/etc/logstash/conf.d/output.conf`:
+
+```
+logstash_configs:
+  - name: input
+    config: |
+      input {
+        beats {
+          host => "0.0.0.0"
+          port => 5044
+          codec => "json"
+        }
+      }
+  - name: output
+    config: |
+      output {
+        stdout {
+          codec => rubydebug
+        }
+      }
+```
+
+The `pipeline` parameter for each `logstash_configs` item allows you to specifcy different configurations per pipeline.
+
+A two pipeline example:
+
+```
+logstash_pipelines:
+  - name: application_events
+    config:
+      pipeline.workers: 3
+  - name: system_logs
+logstash_configs:
+  - name: ec2_instances
+    pipeline: system_logs
+    config: |
+      input {
+        file {
+          path => ["/var/log/*.log"]
+        }
+      }
+      output {
+        elasticsearch {
+          hosts => ["myesloghost:9200"]
+        }
+      }
+  - name: user_events
+    pipeline: application_events
+    config: |
+      input {
+        http {
+          host => "0.0.0.0"
+          port => 8080
+        }
+      }
+      output {
+        elasticsearch {
+          hosts => ["myesmetricshost:9200"]
+        }
+      }
+```
+
+This allows for different pipelines to help split groups of different inputs and outputs.
+
+There are also some legacy deprecated variables that can be used instead of `logstash_pipelines` and `logstash_configs`:
 
   * `logstash_inputs`
   * `logstash_filters`
   * `logstash_outputs`
 
-This vars are expanded into their own sections `input {}`, `filter {}` and
+These vars are expanded into their own sections `input {}`, `filter {}` and
 `output {}`, so you are free to specify whatever config suits you, i.e.:
 
 ```
@@ -105,6 +196,27 @@ This vars are expanded into their own sections `input {}`, `filter {}` and
     - { role: torian.logstash}
 ```
 
+These vars get wrapped in a default `logstash_configs` which is set as:
+
+```
+logstash_configs:
+  - name: filters
+    config: |
+      filter {
+        {{ logstash_filters }}
+      }
+  - name: input
+    config: |
+      input {
+        {{ logstash_inputs }}
+      }
+  - name: output
+    config: |
+      output {
+        {{ logstash_outputs }}
+      }
+```
+
 ### Installing additional plugins
 
 By default, and just as an example, the role installs two plugins:
@@ -124,4 +236,3 @@ If you need to upgrade from a previous logstash version, the role can
 manage it. Specify an extra var `logstash_upgrade=True` and the package manager
 is going to install the latest available release that matches the major from
 `logstash_version`.
-

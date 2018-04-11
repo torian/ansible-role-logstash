@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+{% for pipeline in logstash_pipelines %}
+- pipeline.id: {{ pipeline.name }}
+  path.config: {{ logstash_conf_prefix }}/pipeline_{{ pipeline.name }}.d
+  {% if pipeline.config is defined -%}
+  {{ pipeline.config | to_nice_yaml  }}
+  {%- endif %}
+
+{% endfor %}
+
+# vim:ts=2:sw=2:et:ft=yaml

@@ -1,9 +1,0 @@
-# {{ ansible_managed }}
-
-output {
-{% if logstash_outputs == "" %}
-  stdout { codec => rubydebug }
-{% else %}
-  {{logstash_outputs|indent(width = 2)}}
-{% endif %}
-}
