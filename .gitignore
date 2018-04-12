@@ -3,4 +3,4 @@
 *.swo
 .vagrant
 vagrant
-
+ansible-role-logstash
